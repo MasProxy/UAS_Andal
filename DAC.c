@@ -23,7 +23,7 @@ void DACQuickSort(int n, struct Data * calonPenerima, int fr, int bk) {
         c = fr;
         d = bk;
 
-        //proses pengurutan berdasarkan ongkos hidup
+        //proses pengurutan berdasarkan ongkos hidup (solve)
         while (c < d) {
             while ((calonPenerima[c].ongkosHidupMin <= calonPenerima[pivot].ongkosHidupMin) && (c < bk)) {
                 ++c;
@@ -46,7 +46,7 @@ void DACQuickSort(int n, struct Data * calonPenerima, int fr, int bk) {
         calonPenerima[pivot] = calonPenerima[d];
         calonPenerima[d] = e;
 
-        //rekursif
+        //rekursif (devide)
         DACQuickSort(n, calonPenerima, fr, d - 1);
         DACQuickSort(n, calonPenerima, d + 1, bk);
     }
@@ -115,7 +115,7 @@ int main(){
 
         //proses penghitungan ongkos hidup dan pengurutan data calon penerima
         hitungOngkosHidupMinimal(calonPenerima, n);
-        DACQuickSort(n, calonPenerima, 0, n-1);
+        DACQuickSort(n, calonPenerima, 0, n-1); //dihasilkan data berurut (combine)
 
         //konfirmasi data telah berhasil dibuat
         printf("Hasil berhasil dibuat.\n");
