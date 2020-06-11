@@ -44,6 +44,7 @@ void DACQuickSort(int n, struct Data * calonPenerima, int fr, int bk) {
     }
 }
 
+
 void hitungOngkosHidupMinimal(struct Data * calonPenerima, int n) {
     int i;
 
@@ -76,6 +77,9 @@ int main(){
     if (n == 0) {
         printf("Tidak ada data!\n");
     } else {
+        FILE *fhasil;
+        fhasil = fopen("Hasil_Penerima_Sembako.txt", "w");
+
         printf("==================================================================================\n");
         printf("  Data calon penerima sembako:\n");
         printf(" [Nama Kepala Keluarga, RT, Jumlah Anggota Keluarga, Penghasilan Kepala Keluarga]\n");
@@ -95,18 +99,20 @@ int main(){
         hitungOngkosHidupMinimal(calonPenerima, n);
         DACQuickSort(n, calonPenerima, 0, n-1);
 
-        printf("==================================================================================\n");
-        printf("  Data penerima sembako tetap:\n");
-        printf(" [Nama Kepala Keluarga, RT, Jumlah Anggota Keluarga, Penghasilan Kepala Keluarga]\n");
-        printf("==================================================================================\n");
+        printf("Hasil berhasil dibuat.\n");
+
+        fprintf(fhasil,"==================================================================================\n");
+        fprintf(fhasil,"  Data penerima sembako tetap:\n");
+        fprintf(fhasil," [Nama Kepala Keluarga, RT, Jumlah Anggota Keluarga, Penghasilan Kepala Keluarga]\n");
+        fprintf(fhasil,"==================================================================================\n");
 
         for (i = 0; i < jSembako; ++i)
         {
-            printf("%s %d %d %d\n", calonPenerima[i].namaKepKel, calonPenerima[i].RT,
+            fprintf(fhasil,"%s %d %d %d\n", calonPenerima[i].namaKepKel, calonPenerima[i].RT,
                    calonPenerima[i].jmlAnggotaKel, calonPenerima[i].penghasilanKepKel);
         }
 
-        printf("==================================================================================\n");
+        fprintf(fhasil,"==================================================================================\n");
     }
 
     return 0;

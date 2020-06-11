@@ -1,0 +1,25 @@
+==================================================================================
+  Data penerima sembako tetap:
+ [Nama Kepala Keluarga, RT, Jumlah Anggota Keluarga, Penghasilan Kepala Keluarga]
+==================================================================================
+Himawan_Gunarto 1 7 600000
+Galiono_Wahyudin 5 6 800000
+Paramita_Wahyuni 2 5 800000
+Wage_Situmorang 3 7 1500000
+Gilda_Puspasari 5 6 1300000
+Puti_Nasyiah 1 4 900000
+Amalia_Permata 4 3 700000
+Aslijan_Winarno 4 7 1800000
+Emil_Putra 5 6 1800000
+Prima_Adriansyah 4 4 1200000
+Malika_Mardhiyah_S.Pd 4 7 2100000
+Elvina_Yolanda 2 5 1700000
+Ihsan_Hutapea 1 2 700000
+Sabar_Lamar_Hutasoit 3 5 1800000
+Violet_Laksita 4 7 2600000
+Purwanto_Damanik 1 4 1500000
+Syahrini_Susanti_S.Kom 1 6 2300000
+Laras_Fujiati 3 6 2500000
+Gasti_Febi_Palastri_S.Sos 5 5 2100000
+Prakosa_Tugiman_Hutapea 1 6 2700000
+==================================================================================
