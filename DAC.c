@@ -1,66 +1,113 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef struct{
+struct Data {
+    char namaKepKel[100];
     int RT;
-    char[50] KepalaKeluarga;
-    float penghasilan;//satuan penghasilan (juta)
-}data;
+    int jmlAnggotaKel;
+    int penghasilanKepKel;
+    float ongkosHidupMin;
+};
 
 
-void DAC(){
+void DACQuickSort(int n, struct Data * calonPenerima, int fr, int bk) {
+    int c, d, pivot;
+    struct Data e;
 
+    if (fr < bk) {
+        pivot = fr;
+        c = fr;
+        d = bk;
+
+        while (c < d) {
+            while ((calonPenerima[c].ongkosHidupMin <= calonPenerima[pivot].ongkosHidupMin) && (c < bk)) {
+                ++c;
+            }
+
+            while (calonPenerima[d].ongkosHidupMin > calonPenerima[pivot].ongkosHidupMin) {
+                --d;
+            }
+
+            if (c < d) {
+                e = calonPenerima[c];
+                calonPenerima[c] = calonPenerima[d];
+                calonPenerima[d] = e;
+            }
+        }
+
+        e = calonPenerima[pivot];
+        calonPenerima[pivot] = calonPenerima[d];
+        calonPenerima[d] = e;
+
+        DACQuickSort(n, calonPenerima, fr, d - 1);
+        DACQuickSort(n, calonPenerima, d + 1, bk);
+    }
+}
+
+void hitungOngkosHidupMinimal(struct Data * calonPenerima, int n) {
+    int i;
+
+    for (i = 0; i < n; i++) {
+        calonPenerima[i].ongkosHidupMin = calonPenerima[i].penghasilanKepKel / calonPenerima[i].jmlAnggotaKel;
+    }
 }
 
 int main(){
-    rw[10] data;
-    rw[0].RT = 5;
-    rw[0].penghasilan = 2.5;
-    strcpy(rw[0].KepalaKeluarga,"Budiansyah");
-    
-    rw[1].RT = 4;
-    rw[1].penghasilan = 3.5;
-    strcpy(rw[1].KepalaKeluarga,"Rudi");
-    
-    rw[2].RT = 5;
-    rw[2].penghasilan = 7.5;
-    strcpy(rw[2].KepalaKeluarga,"Imas");
-    
-    rw[3].RT = 4;
-    rw[3].penghasilan = 4;
-    strcpy(rw[3].KepalaKeluarga,"Yuki");
-    
-    rw[3].RT = 4;
-    rw[3].penghasilan = 4;
-    strcpy(rw[3].KepalaKeluarga,"Yupi");
-    
-    rw[4].RT = 1;
-    rw[4].penghasilan = 4.7;
-    strcpy(rw[4].KepalaKeluarga,"Romi");
-    
-    rw[5].RT = 1;
-    rw[5].penghasilan = 2.7;
-    strcpy(rw[5].KepalaKeluarga,"Rossi");
-    
-    rw[5].RT = 2;
-    rw[5].penghasilan = 7;
-    strcpy(rw[5].KepalaKeluarga,"Rusa");
-    
-    rw[6].RT = 3;
-    rw[6].penghasilan = 5;
-    strcpy(rw[6].KepalaKeluarga,"Ryuki");
-    
-    rw[7].RT = 3;
-    rw[7].penghasilan = 5.5;
-    strcpy(rw[7].KepalaKeluarga,"Tomo");
-    
-    rw[8].RT = 2;
-    rw[8].penghasilan = 4;
-    strcpy(rw[8].KepalaKeluarga,"Rudi");
-    
-    rw[9].RT = 3;
-    rw[9].penghasilan = 4.3;
-    strcpy(rw[9].KepalaKeluarga,"Tomi");
-    
+    int i;
+    int n = 0;
+    int jSembako;
+
+    struct Data calonPenerima[200];
+
+    FILE *fCalon;
+    fCalon = fopen("Data_Calon_Penerima_Sembako.txt", "r");
+
+    fscanf(fCalon, "%s %d %d %d", calonPenerima[n].namaKepKel, &calonPenerima[n].RT,
+        &calonPenerima[n].jmlAnggotaKel, &calonPenerima[n].penghasilanKepKel);
+
+    while (strcmp(calonPenerima[n].namaKepKel, "##########") != 0) {
+        ++n;
+        fscanf(fCalon, "%s %d %d %d", calonPenerima[n].namaKepKel, &calonPenerima[n].RT,
+               &calonPenerima[n].jmlAnggotaKel, &calonPenerima[n].penghasilanKepKel);
+    }
+
+    fclose(fCalon);
+
+    if (n == 0) {
+        printf("Tidak ada data!\n");
+    } else {
+        printf("==================================================================================\n");
+        printf("  Data calon penerima sembako:\n");
+        printf(" [Nama Kepala Keluarga, RT, Jumlah Anggota Keluarga, Penghasilan Kepala Keluarga]\n");
+        printf("==================================================================================\n");
+
+        for (i = 0; i < n; ++i) {
+            printf("%s %d %d %d\n", calonPenerima[i].namaKepKel, calonPenerima[i].RT,
+                   calonPenerima[i].jmlAnggotaKel, calonPenerima[i].penghasilanKepKel);
+        }
+
+        printf("==================================================================================\n\n");
+
+        printf("Jumlah sembako yang tersedia: ");
+        scanf("%d", &jSembako);
+        printf("\n");
+
+        hitungOngkosHidupMinimal(calonPenerima, n);
+        DACQuickSort(n, calonPenerima, 0, n-1);
+
+        printf("==================================================================================\n");
+        printf("  Data penerima sembako tetap:\n");
+        printf(" [Nama Kepala Keluarga, RT, Jumlah Anggota Keluarga, Penghasilan Kepala Keluarga]\n");
+        printf("==================================================================================\n");
+
+        for (i = 0; i < jSembako; ++i)
+        {
+            printf("%s %d %d %d\n", calonPenerima[i].namaKepKel, calonPenerima[i].RT,
+                   calonPenerima[i].jmlAnggotaKel, calonPenerima[i].penghasilanKepKel);
+        }
+
+        printf("==================================================================================\n");
+    }
+
     return 0;
 }
